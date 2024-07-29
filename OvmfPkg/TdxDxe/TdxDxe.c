@@ -333,6 +333,42 @@ TdxDxeEntryPoint (
   PcdStatus = PcdSet16S (PcdOvmfHostBridgePciDevId, PlatformInfo->HostBridgeDevId);
   ASSERT_RETURN_ERROR (PcdStatus);
 
+  DEBUG ((
+    DEBUG_INFO,
+    "OYH PlatformInfoHob%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x,%x\n",
+    PlatformInfo->HostBridgeDevId,
+    PlatformInfo->PcdConfidentialComputingGuestAttr,
+    PlatformInfo->SevEsIsEnabled,
+    PlatformInfo->BootMode,
+    PlatformInfo->S3Supported,
+    PlatformInfo->SmmSmramRequire,
+    PlatformInfo->Q35SmramAtDefaultSmbase,
+    PlatformInfo->Q35TsegMbytes,
+    PlatformInfo->LowMemory,
+    PlatformInfo->FirstNonAddress,
+    PlatformInfo->PhysMemAddressWidth,
+    PlatformInfo->Uc32Base,
+    PlatformInfo->Uc32Size,
+    PlatformInfo->PcdSetNxForStack,
+    PlatformInfo->PcdTdxSharedBitMask,
+    PlatformInfo->PcdPciMmio64Base,
+    PlatformInfo->PcdPciMmio64Size,
+    PlatformInfo->PcdPciMmio32Base,
+    PlatformInfo->PcdPciMmio32Size,
+    PlatformInfo->PcdPciIoBase,
+    PlatformInfo->PcdPciIoSize,
+    PlatformInfo->PcdEmuVariableNvStoreReserved,
+    PlatformInfo->PcdCpuBootLogicalProcessorNumber,
+    PlatformInfo->PcdCpuMaxLogicalProcessorNumber,
+    PlatformInfo->DefaultMaxCpuNumber,
+    PlatformInfo->S3AcpiReservedMemoryBase,
+    PlatformInfo->S3AcpiReservedMemorySize,
+    PlatformInfo->FeatureControlValue,
+    PlatformInfo->QemuFwCfgChecked,
+    PlatformInfo->QemuFwCfgSupported,
+    PlatformInfo->QemuFwCfgDmaSupported
+    ));
+
  #ifdef TDX_PEI_LESS_BOOT
   //
   // For Pei-less boot, PlatformInfo contains more information and
