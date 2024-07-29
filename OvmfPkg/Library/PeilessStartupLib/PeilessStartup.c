@@ -86,7 +86,7 @@ InitializePlatform (
     PlatformInitEmuVariableNvStore (VariableStore);
   }
 
-  if (TdIsEnabled ()) {
+  if (TdIsEnabled () && !TdpIsEnabled ()) {
     PlatformTdxPublishRamRegions ();
   } else {
     PlatformQemuInitializeRam (PlatformInfoHob);
@@ -106,10 +106,13 @@ InitializePlatform (
 
   PlatformNoexecDxeInitialization (PlatformInfoHob);
 
-  if (TdIsEnabled ()) {
+  if (TdIsEnabled () && !TdpIsEnabled ()) {
     PlatformInfoHob->PcdConfidentialComputingGuestAttr = CCAttrIntelTdx;
     PlatformInfoHob->PcdTdxSharedBitMask               = TdSharedPageMask ();
     PlatformInfoHob->PcdSetNxForStack                  = TRUE;
+  } else {
+    PlatformInfoHob->PcdConfidentialComputingGuestAttr = CCAttrIntelTdx;
+    PlatformInfoHob->PcdTdxSharedBitMask               = TdSharedPageMask ();
   }
 
   PlatformMiscInitialization (PlatformInfoHob);
@@ -148,7 +151,7 @@ PeilessStartup (
 
   ZeroMem (&PlatformInfoHob, sizeof (PlatformInfoHob));
 
-  if (TdIsEnabled ()) {
+  if (TdIsEnabled () && !TdpIsEnabled ()) {
     VmmHobList = (VOID *)(UINTN)FixedPcdGet32 (PcdOvmfSecGhcbBase);
     Status     = TdCall (TDCALL_TDINFO, 0, 0, 0, &TdReturnData);
     ASSERT (Status == EFI_SUCCESS);
@@ -174,7 +177,7 @@ PeilessStartup (
 
   DEBUG ((DEBUG_INFO, "HobList: %p\n", GetHobList ()));
 
-  if (TdIsEnabled ()) {
+  if (TdIsEnabled () && !TdpIsEnabled ()) {
     //
     // Build GuidHob for the tdx measurements which were done in SEC phase.
     //

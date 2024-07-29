@@ -172,6 +172,7 @@
   PeiHardwareInfoLib|OvmfPkg/Library/HardwareInfoLib/PeiHardwareInfoLib.inf
   DxeHardwareInfoLib|OvmfPkg/Library/HardwareInfoLib/DxeHardwareInfoLib.inf
   ImagePropertiesRecordLib|MdeModulePkg/Library/ImagePropertiesRecordLib/ImagePropertiesRecordLib.inf
+  MmUnblockMemoryLib|MdePkg/Library/MmUnblockMemoryLib/MmUnblockMemoryLibNull.inf
 
   LockBoxLib|OvmfPkg/Library/LockBoxLib/LockBoxBaseLib.inf
   CustomizedDisplayLib|MdeModulePkg/Library/CustomizedDisplayLib/CustomizedDisplayLib.inf
@@ -771,8 +772,8 @@
   #
   # Cc Measurement Protocol for Td guest
   #
-  SecurityPkg/Tcg/TdTcg2Dxe/TdTcg2Dxe.inf {
-    <LibraryClasses>
-      HashLib|SecurityPkg/Library/HashLibTdx/HashLibTdx.inf
-      NULL|SecurityPkg/Library/HashInstanceLibSha384/HashInstanceLibSha384.inf
-  }
+  #SecurityPkg/Tcg/TdTcg2Dxe/TdTcg2Dxe.inf {
+  #  <LibraryClasses>
+  #    HashLib|SecurityPkg/Library/HashLibTdx/HashLibTdx.inf
+  #    NULL|SecurityPkg/Library/HashInstanceLibSha384/HashInstanceLibSha384.inf
+  #}
