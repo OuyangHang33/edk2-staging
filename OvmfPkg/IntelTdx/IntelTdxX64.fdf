@@ -11,7 +11,7 @@
 ################################################################################
 
 [Defines]
-!include OvmfPkg/Include/Fdf/OvmfPkgDefines.fdf.inc
+!include OvmfPkg/Include/Fdf/OvmfPkgIntelDefines.fdf.inc
 
 #
 # Build the variable store and the firmware code as one unified flash device
@@ -145,6 +145,12 @@ READ_LOCK_STATUS   = TRUE
 INF  OvmfPkg/IntelTdx/Sec/SecMain.inf
 
 INF  RuleOverride=RESET_VECTOR OvmfPkg/ResetVector/ResetVector.inf
+
+#
+# TPM support
+#
+#INF OvmfPkg/Tcg/TdpVtpmDetectPei/TdpVtpmDetectPei.inf
+!include OvmfPkg/Include/Fdf/OvmfTpmPei.fdf.inc
 
 ################################################################################
 
@@ -327,6 +333,11 @@ INF  OvmfPkg/PlatformDxe/Platform.inf
 
 !include OvmfPkg/Include/Fdf/ShellDxe.fdf.inc
 
+#
+# TPM support
+#
+!include OvmfPkg/Include/Fdf/OvmfTpmDxe.fdf.inc
+
 ################################################################################
 
 [FV.FVMAIN_COMPACT]
@@ -369,6 +380,14 @@ FILE FV_IMAGE = 9E21FD93-9C72-4c15-8C4B-E77F1DB2D792 {
     PE32     PE32           $(INF_OUTPUT)/$(MODULE_NAME).efi
     UI       STRING ="$(MODULE_NAME)" Optional
     VERSION  STRING ="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
+  }
+
+[Rule.Common.PEIM]
+  FILE PEIM = $(NAMED_GUID) {
+     PEI_DEPEX PEI_DEPEX Optional        $(INF_OUTPUT)/$(MODULE_NAME).depex
+     PE32      PE32   Align=Auto         $(INF_OUTPUT)/$(MODULE_NAME).efi
+     UI       STRING="$(MODULE_NAME)" Optional
+     VERSION  STRING="$(INF_VERSION)" Optional BUILD_NUM=$(BUILD_NUMBER)
   }
 
 [Rule.Common.DXE_CORE]
